@@ -9,9 +9,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUtensils, faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 
 
-const About = ( {data} ) => (
+const About = ( {data, location} ) => (
   <div>
     <Layout>
+      <Seo 
+        pagetitle="ESSENTIALSについて"
+        pagedesc="食べ物について情報を発信しているサイトです。"
+        pagepath={location.pathname}
+        pageimg={data.about.childImageSharp.original.src}
+        pageimgw={data.about.childImageSharp.original.width}
+        pageimgh={data.about.childImageSharp.original.height}
+      />
       <div className="eyecatch">
         <figure>
           <GatsbyImage image={data.about.childImageSharp.gatsbyImageData} alt="ブルーベリー&ヨーグルト" />
@@ -58,6 +66,11 @@ export const query = graphql`
     about: file(relativePath: {eq: "about.jpg"}) {
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH)
+        original {
+          src
+          height
+          width
+        }
       }
     }
   }

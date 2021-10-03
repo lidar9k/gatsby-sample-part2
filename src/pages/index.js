@@ -8,13 +8,8 @@ import Seo from "../components/seo"
 
 const IndexPage = ( {data} ) => (
   <div>
+    <Seo />
     <Layout>
-      <meta charSet="UTF-8" />
-      <meta name="viewport" content="width=device-width" />
-      <title>ESSENTIALS</title>
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossOrigin="anonymous" />
-      <link rel="stylesheet" href="style.css" />
-      <link rel="icon" href="/images/icon.png" type="image/png" />
       <section className="hero">
         <figure>
           <GatsbyImage image={data.hero.childImageSharp.gatsbyImageData} alt="" style={{ height: "100%" }} />
