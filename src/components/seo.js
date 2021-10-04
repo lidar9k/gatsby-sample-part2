@@ -38,7 +38,7 @@ function Seo( props ) {
       : data.site.siteMetadata.siteUrl
 
   const imgurl = props.pageimg
-      ? `${data.siteMetadata.siteUrl}${props.pageimg}`
+      ? `${data.site.siteMetadata.siteUrl}${props.pageimg}`
       : `${data.site.siteMetadata.siteUrl}/thumb.jpg`
 
   const imgw = props.pageimgw || 1280
