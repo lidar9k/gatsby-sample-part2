@@ -5428,7 +5428,7 @@ gatsby-recipes@^0.25.0:
 
 gatsby-source-contentful@^5.14.0:
   version "5.14.0"
-  resolved "https://registry.npmjs.org/gatsby-source-contentful/-/gatsby-source-contentful-5.14.0.tgz"
+  resolved "https://registry.yarnpkg.com/gatsby-source-contentful/-/gatsby-source-contentful-5.14.0.tgz#63a43c13224377bf98e3861c6d3a8678e0379dcf"
   integrity sha512-ZdyuBJ/GKK5RDtcwjNKPoZfe46I8vAl33oeHXAVrSlox8Z42mMawYi4ZS6MSCPqSReVpdcAXQKgjeBEQjaBkAQ==
   dependencies:
     "@babel/runtime" "^7.15.4"
