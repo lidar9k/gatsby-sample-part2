@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@contentful/rich-text-plain-text-renderer": "^15.3.6",
     "@contentful/rich-text-react-renderer": "^15.4.0",
     "@contentful/rich-text-types": "^15.3.6",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

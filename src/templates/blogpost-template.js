@@ -1,12 +1,14 @@
 import React from "react"
 import Layout from "../components/layout"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import { GatsbyImage, StaticImage } from "gatsby-plugin-image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClock, faFolderOpen } from "@fortawesome/free-regular-svg-icons"
 import { faChevronLeft, faChevronRight, faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 import { renderRichText } from "gatsby-source-contentful/rich-text"
 import { BLOCKS } from "@contentful/rich-text-types"
+import Seo from "../components/seo"
+import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer"
 
 const options = {
     renderNode: {
@@ -34,8 +36,18 @@ const options = {
       },
 }
 
-const BlogPost = ({ data }) => (
+const BlogPost = ({ data, pageContext, location }) => (
     <Layout>
+        <Seo
+            pagetitle={data.contentfulBlogPost.title}
+            pagedesc={`${documentToPlainTextString(
+                JSON.parse(data.contentfulBlogPost.content.raw)
+            ).slice(0,70)}...`}
+            pagepath={location.pathname}
+            blogimg={`https:${data.contentfulBlogPost.eyecatch.file.url}`}
+            pageimgw={data.contentfulBlogPost.eyecatch.file.details.image.width}
+            pageimgh={data.contentfulBlogPost.eyecatch.file.details.image.height}
+        />
         <div>
             <div className="eyecatch">
                 <figure>
@@ -70,17 +82,22 @@ const BlogPost = ({ data }) => (
                     {renderRichText(data.contentfulBlogPost.content, options)}
                 </div>
                 <ul className="postlink">
-                    <li className="prev">
-                    <a href="base-blogpost.html" rel="prev">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                        <span>前の記事</span>
-                    </a>
-                    </li>
-                    <li className="next">
-                    <a href="base-blogpost.html" rel="next">
-                    <FontAwesomeIcon icon={faChevronRight} />
-                    </a>
-                    </li>
+                    {pageContext.next && (
+                        <li className="prev">
+                        <Link to={`/blog/post/${pageContext.next.slug}/`} rel="prev">
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                            <span>{pageContext.next.title}</span>
+                        </Link>
+                        </li>
+                    )}
+                    {pageContext.previous && (
+                        <li className="next">
+                        <Link to={`/blog/post/${pageContext.previous.slug}/`} rel="next">
+                            <span>{pageContext.previous.title}</span>
+                            <FontAwesomeIcon icon={faChevronRight} />
+                        </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </article>
@@ -92,8 +109,8 @@ const BlogPost = ({ data }) => (
 export default BlogPost
 
 export const query = graphql`
-query {
-        contentfulBlogPost {
+query($id: String!) {
+        contentfulBlogPost(id: { eq: $id }) {
             title
             publishDateJP: publishDate(formatString: "YYYY年MM月DD日")
             publishDate
@@ -103,9 +120,18 @@ query {
                 id
             }
             eyecatch {
-                gatsbyImageData
+                file {
+                  details {
+                    image {
+                      height
+                      width
+                    }
+                  }
+                  url
+                }
                 description
-            }
+                gatsbyImageData
+              }
             content {
                 raw
                 references {
