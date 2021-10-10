@@ -20,20 +20,20 @@ const options = {
         ),
         [BLOCKS.EMBEDDED_ASSET]: node => (
             <GatsbyImage
-              image={node.data.target.gatsbyImageData}
-              alt={
-                node.data.target.description
-                  ? node.data.target.description
-                  : node.data.target.title
-              }
+                image={node.data.target.gatsbyImageData}
+                alt={
+                    node.data.target.description
+                        ? node.data.target.description
+                        : node.data.target.title
+                }
             />
         ),
     },
     renderText: text => {
         return text.split("\n").reduce((children, textSegment, index) => {
-          return [...children, index > 0 && <br key={index} />, textSegment]
+            return [...children, index > 0 && <br key={index} />, textSegment]
         }, [])
-      },
+    },
 }
 
 const BlogPost = ({ data, pageContext, location }) => (
@@ -42,7 +42,7 @@ const BlogPost = ({ data, pageContext, location }) => (
             pagetitle={data.contentfulBlogPost.title}
             pagedesc={`${documentToPlainTextString(
                 JSON.parse(data.contentfulBlogPost.content.raw)
-            ).slice(0,70)}...`}
+            ).slice(0, 70)}...`}
             pagepath={location.pathname}
             blogimg={`https:${data.contentfulBlogPost.eyecatch.file.url}`}
             pageimgw={data.contentfulBlogPost.eyecatch.file.details.image.width}
@@ -51,57 +51,57 @@ const BlogPost = ({ data, pageContext, location }) => (
         <div>
             <div className="eyecatch">
                 <figure>
-                    <GatsbyImage 
-                        image={data.contentfulBlogPost.eyecatch.gatsbyImageData} 
-                    alt={data.contentfulBlogPost.eyecatch.description} 
+                    <GatsbyImage
+                        image={data.contentfulBlogPost.eyecatch.gatsbyImageData}
+                        alt={data.contentfulBlogPost.eyecatch.description}
                     />
                 </figure>
             </div>
             <article className="content">
                 <div className="container">
-                <h1 className="bar">
-                    {data.contentfulBlogPost.title}
-                </h1>
-                <aside className="info">
-                    <time dateTime={data.contentfulBlogPost.publishDate}>
-                        <FontAwesomeIcon icon={faClock} />
-                        {data.contentfulBlogPost.publishDateJP}
-                    </time>
-                    <div className="cat">
-                    <FontAwesomeIcon icon={faFolderOpen} />
-                    <ul>
-                        {data.contentfulBlogPost.category.map(cat => (
-                            <li className={cat.categorySlug} key={cat.id}>
-                                {cat.category}
-                            </li>
-                        ))}
-                    </ul>
+                    <h1 className="bar">
+                        {data.contentfulBlogPost.title}
+                    </h1>
+                    <aside className="info">
+                        <time dateTime={data.contentfulBlogPost.publishDate}>
+                            <FontAwesomeIcon icon={faClock} />
+                            {data.contentfulBlogPost.publishDateJP}
+                        </time>
+                        <div className="cat">
+                            <FontAwesomeIcon icon={faFolderOpen} />
+                            <ul>
+                                {data.contentfulBlogPost.category.map(cat => (
+                                    <li className={cat.categorySlug} key={cat.id}>
+                                        {cat.category}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </aside>
+                    <div className="postbody">
+                        {renderRichText(data.contentfulBlogPost.content, options)}
                     </div>
-                </aside>
-                <div className="postbody">
-                    {renderRichText(data.contentfulBlogPost.content, options)}
+                    <ul className="postlink">
+                        {pageContext.next && (
+                            <li className="prev">
+                                <Link to={`/blog/post/${pageContext.next.slug}/`} rel="prev">
+                                    <FontAwesomeIcon icon={faChevronLeft} />
+                                    <span>{pageContext.next.title}</span>
+                                </Link>
+                            </li>
+                        )}
+                        {pageContext.previous && (
+                            <li className="next">
+                                <Link to={`/blog/post/${pageContext.previous.slug}/`} rel="next">
+                                    <span>{pageContext.previous.title}</span>
+                                    <FontAwesomeIcon icon={faChevronRight} />
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
                 </div>
-                <ul className="postlink">
-                    {pageContext.next && (
-                        <li className="prev">
-                        <Link to={`/blog/post/${pageContext.next.slug}/`} rel="prev">
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                            <span>{pageContext.next.title}</span>
-                        </Link>
-                        </li>
-                    )}
-                    {pageContext.previous && (
-                        <li className="next">
-                        <Link to={`/blog/post/${pageContext.previous.slug}/`} rel="next">
-                            <span>{pageContext.previous.title}</span>
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </Link>
-                        </li>
-                    )}
-                </ul>
-            </div>
-        </article>
-    </div>
+            </article>
+        </div>
 
     </Layout>
 )

@@ -8,8 +8,8 @@ module.exports = {
     description: `おししい食材と食事を探究するサイト`,
     lang: `ja`,
     siteUrl: `https://*******.netlify.app`,
-    locale:`ja_JP`,
-    fbappid: `xxxx`
+    locale: `ja_JP`,
+    fbappid: `xxxx`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -17,7 +17,7 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,                 
+        name: `images`,
         path: `${__dirname}/src/images`,
       },
     },

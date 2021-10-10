@@ -1,7 +1,6 @@
 import * as React from "react"
-import { Link } from "gatsby"
 import { GatsbyImage, StaticImage } from "gatsby-plugin-image"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
@@ -59,6 +58,27 @@ const IndexPage = ( {data} ) => (
           <GatsbyImage image={data.berry.childImageSharp.gatsbyImageData} alt="赤く熟したベリー" style={{ height: "100%" }} />
         </figure>
       </section>
+      <section>
+            <div className="container">
+                <h2 className="sr-only">RECENT POSTS</h2>
+                <div className="posts">
+                    {data.allContentfulBlogPost.edges.map(({ node }) => (
+                        <article className="post" key={node.id}>
+                            <Link to={`blog/post/${node.slug}/`} >
+                                <figure>
+                                    <GatsbyImage
+                                        image={node.eyecatch.gatsbyImageData}
+                                        alt={node.eyecatch.description}
+                                        style={{ height: "100%" }}
+                                    />
+                                </figure>
+                                <h3>{node.title}</h3>
+                            </Link>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </section>
     </Layout>
   </div>
 )
@@ -97,5 +117,22 @@ export const query = graphql`
         gatsbyImageData(layout: FULL_WIDTH, quality: 90)
       }
     }
+    allContentfulBlogPost(
+            sort: {fields: publishDate, order: DESC}
+            skip: 0
+            limit: 4
+        ) {
+            edges {
+                node {
+                    title
+                    id
+                    slug
+                    eyecatch {
+                        description
+                        gatsbyImageData(width: 573, layout: CONSTRAINED)
+                    }
+                }
+            }
+        }
   }
 `

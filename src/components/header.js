@@ -17,6 +17,7 @@ const Header = ({ siteTitle }) => (
         <ul>
           <li><Link to={`/`}>TOP</Link></li>
           <li><Link to={`/about`}>About</Link></li>
+          <li><Link to={`/blog`}>Blog</Link></li>
         </ul>
       </nav>
     </div>
@@ -26,6 +27,7 @@ const Header = ({ siteTitle }) => (
 Header.propTypes = {
   siteTitle: PropTypes.string,
 }
+
 
 Header.defaultProps = {
   siteTitle: ``,
